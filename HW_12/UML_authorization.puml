@@ -1,0 +1,58 @@
+@startuml
+
+interface IController {
+    + generateAuthToken(): string
+    + getToken(): string
+}
+
+interface IManager {
+    + authorizeUser(token: string): boolean
+    + validateToken(token: string): boolean
+}
+
+interface IRepository {
+    + saveToken(token: string): void
+    + queryDatabase(): void
+}
+
+class Controller implements IController {
+    - token: string
+
+    + generateAuthToken(): string
+    + getToken(): string
+}
+
+class Manager implements IManager {
+    - controller: IController
+
+    + authorizeUser(token: string): boolean
+    + validateToken(token: string): boolean
+}
+
+class Repository implements IRepository {
+    + saveToken(token: string): void
+    + queryDatabase(): void
+}
+
+class User {
+    + username: string
+    + password: string
+}
+
+class Application {
+    - controller: IController
+    - manager: IManager
+    - repository: IRepository
+
+    + run(): void
+}
+
+Controller ..> IController
+Manager ..> IManager
+Repository ..> IRepository
+Application --> Controller
+Application --> Manager
+Application --> Repository
+User --> Application
+
+@enduml
