@@ -1,0 +1,63 @@
+@startuml
+
+class Robot {
+  - id: integer
+  - model: string
+  - version: string
+  - status: string
+  - resource: integer
+  - fabric_model: string
+  - ip_address: string
+}
+
+class User {
+  - id: integer
+  - login: string
+  - hash_password: string
+  - email: string
+}
+
+class Schedule {
+  - id: integer
+  - dateTime: string
+  - id_robot: integer
+}
+
+class Error {
+  - code_error: integer
+  - message_error: string
+}
+
+class Robots {
+  - robots: Robot[]
+}
+
+class Users {
+  - users: User[]
+}
+
+class Schedules {
+  - schedules: Schedule[]
+}
+
+class hm12api {
+  - version: string
+  + getAllRobots(): Robot[]
+  + createRobot(robot: Robot): Robot
+  + getRobotById(robotId: integer): Robot
+  + getAllUsers(): User[]
+  + createUser(user: User): User
+  + getUserById(userId: integer): User
+  + updateSchedule(schedule: Schedule): Schedule
+  + getAllSchedules(): Schedule[]
+}
+
+hm12api --> Robots
+hm12api --> Users
+hm12api --> Schedules
+Robot --> Error
+User --> Error
+Schedule --> Error
+
+@enduml
+
